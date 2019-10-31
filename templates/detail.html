@@ -13,8 +13,8 @@
     
     <form method="post" action="/update/{{.customer.Customer_id}}">
         <p>名前<input type="text" name="customer_name" size="30" value="{{.customer.Customer_name}}" ></p>
-        <p>年齢<input type="number" name="age" value="{{.customer.Age}}" ></p>
-        <p>性別<input type="number" name="gender" value="{{.customer.Gender}}" ></p>
+        <p>年齢<input type="text" name="age" size="30" value="{{.customer.Age}}" ></p>
+        <p>性別<input type="text" name="gender" size="30" value="{{.customer.Gender}}" ></p>
         <!-- <p>状態
             <select name="status">
                 {{if eq .todo.Status "未実行"}}

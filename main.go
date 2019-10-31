@@ -1,6 +1,8 @@
 package main
 
 import (
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 
@@ -39,22 +41,26 @@ func dbInit() {
 }
 
 //DB追加
-func dbInsert(customer_id string, customer_name string, age int, gender int) {
+func dbInsert(customer_id string, customer_name string, ageS string, genderS string) {
 	db, err := gorm.Open("postgres", "host=localhost port=5432 user=daisuke dbname=ex4 password=")
 	if err != nil {
 		panic("データベース開けず！（dbInsert）")
 	}
+	age, _ := strconv.Atoi(ageS)
+	gender, _ := strconv.Atoi(genderS)
 	// Customerという構造体に与えられた引数をいれた状態で、db.Create()に渡しています。
 	db.Create(&Customer{Customer_id: customer_id, Customer_name: customer_name, Age: age, Gender: gender})
 	defer db.Close()
 }
 
 //DB更新
-func dbUpdate(customer_id string, customer_name string, age int, gender int) {
+func dbUpdate(customer_id string, customer_name string, ageS string, genderS string) {
 	db, err := gorm.Open("postgres", "host=localhost port=5432 user=daisuke dbname=ex4 password=")
 	if err != nil {
 		panic("データベース開けず！（dbUpdate）")
 	}
+	age, _ := strconv.Atoi(ageS)
+	gender, _ := strconv.Atoi(genderS)
 	var customer Customer
 	// 特定のレコードを呼び出す
 	db.First(&customer, customer_id)
@@ -151,7 +157,7 @@ func main() {
 
 	//Update
 	router.POST("/update/:customer_id", func(ctx *gin.Context) {
-		// ここでidの値を受け取り、int型に変換しています。
+		// ここでidの値を受け取り、int型に変換
 		// n := ctx.Param("id")
 		// id, err := strconv.Atoi(n)
 		// if err != nil {
