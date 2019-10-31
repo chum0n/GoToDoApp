@@ -15,6 +15,12 @@ type Customer struct {
 	// あなたのモデルに組み込んで使っても良いですし、組み込まずに独自のモデルを使っても構いません。
 	// `ID`, `CreatedAt`, `UpdatedAt`, `DeletedAt`フィールドを`Customer`モデルに注入します
 	// いつかタイムスタンプも使うかもしれないので追加
+	// 	GORMの標準のモデルはどういう名前で入っているかというと、
+	// id → ID
+	// created_at → CreatedAt
+	// updated_at → UpdatedAt
+	// deleted_at → DeletedAt
+	// となっています。これらはHTMLにGO側から変数を渡した時の呼び出すときにも使うので注意してください。
 	gorm.Model
 	Customer_id string
 	Customer_name string
@@ -34,26 +40,29 @@ func dbInit() {
 }
 
 //DB追加
-func dbInsert(text string, status string) {
+func dbInsert(customer_id string, customer_name string, age int, gender int) {
     db, err := gorm.Open("postgres", "host=localhost port=5432 user=daisuke dbname=ex4 password=")
     if err != nil {
         panic("データベース開けず！（dbInsert）")
 	}
-    db.Create(&Todo{Text: text, Status: status})
+	// Customerという構造体に与えられた引数をいれた状態で、db.Create()に渡しています。
+    db.Create(&Customer{Customer_id: customer_id, Customer_name: customer_name, Age: age, Gender: gender})
     defer db.Close()
 }
 
 //DB更新
-func dbUpdate(id int, text string, status string) {
+func dbUpdate(customer_id string, customer_name string, age int, gender int) {
     db, err := gorm.Open("postgres", "host=localhost port=5432 user=daisuke dbname=ex4 password=")
     if err != nil {
         panic("データベース開けず！（dbUpdate）")
 	}
-    var todo Todo
-    db.First(&todo, id)
-    todo.Text = text
-    todo.Status = status
-    db.Save(&todo)
+	var customer Customer
+	// 特定のレコードを呼び出す
+    db.First(&customer, customer_id)
+	customer.Customer_name = customer_name
+	customer.Age = age
+    customer.Gender = gender
+    db.Save(&customer)
     db.Close()
 }
 
@@ -63,34 +72,36 @@ func dbDelete(id int) {
     if err != nil {
         panic("データベース開けず！（dbDelete）")
 	}
-    var todo Todo
-    db.First(&todo, id)
-    db.Delete(&todo)
+    var customer Customer
+    db.First(&customer, customer_id)
+    db.Delete(&customer)
     db.Close()
 }
 
 //DB全取得
-func dbGetAll() []Todo {
+func dbGetAll() []Customer {
     db, err := gorm.Open("postgres", "host=localhost port=5432 user=daisuke dbname=ex4 password=")
     if err != nil {
         panic("データベース開けず！（dbGetAll）")
 	}
-    var todos []Todo
-    db.Order("created_at desc").Find(&todos)
+	var customers []Customer
+	// db.Find(&customers)で構造体Customerに対するテーブルの要素全てを取得し、それをOrder("created_at desc)で新しいものが上に来るよう並び替えを行なっています。
+    db.Order("created_at desc").Find(&customers)
     db.Close()
-    return todos
+    return customers
 }
 
 //DB一つ取得
-func dbGetOne(id int) Todo {
+func dbGetOne(customer_id string) Customer {
     db, err := gorm.Open("postgres", "host=localhost port=5432 user=daisuke dbname=ex4 password=")
     if err != nil {
         panic("データベース開けず！（dbGetOne）")
 	}
-    var todo Todo
-    db.First(&todo, id)
+	var customer Customer
+	// 第２引数にはidを加えることで特定のレコードを取得することができます。
+    db.First(&customer, customer_id)
     db.Close()
-    return todo
+    return customer
 }
 
 func main() {
@@ -98,13 +109,82 @@ func main() {
 	// HTMLを読み込むディレクトリを指定
 	router.LoadHTMLGlob("templates/*.html")
 
-	data := "Hello Go/Gin!!"
+	// data := "Hello Go/Gin!!"
 
-	// index.htmlにGETで繋ぐ
-	router.GET("/", func(ctx *gin.Context) {
-		// mapで値を渡す
-		ctx.HTML(200, "index.html", gin.H{"data": data})
+	// // index.htmlにGETで繋ぐ
+	// router.GET("/", func(ctx *gin.Context) {
+	// 	// mapで値を渡す
+	// 	ctx.HTML(200, "index.html", gin.H{"data": data})
+	// })
+
+	dbInit()
+
+	//Index
+    router.GET("/", func(ctx *gin.Context) {
+        todos := dbGetAll()
+        ctx.HTML(200, "index.html", gin.H{
+            "customers": customers,
+        })
 	})
+
+	//Create
+    router.POST("/new", func(ctx *gin.Context) {
+		customer_id := ctx.PostForm("customer_id")
+		customer_name := ctx.PostForm("customer_name")
+		age := ctx.PostForm("age")
+		gender := ctx.PostForm("gender")
+		dbInsert(customer_id, customer_name, age, gender)
+		// localhost:8080/にステータスコード302としてリダイレクト
+        ctx.Redirect(302, "/")
+	})
+
+	//Detail
+    router.GET("/detail/:customer_id", func(ctx *gin.Context) {
+        // n := ctx.Param("customer_id")
+        // id, err := strconv.Atoi(n)
+        if err != nil {
+            panic(err)
+        }
+        todo := dbGetOne(customer_id)
+        ctx.HTML(200, "detail.html", gin.H{"customer": customer})
+	})
+	
+	//Update
+    router.POST("/update/:customer_id", func(ctx *gin.Context) {
+        // n := ctx.Param("id")
+        // id, err := strconv.Atoi(n)
+        if err != nil {
+            panic("ERROR")
+		}
+		customer_name := ctx.PostForm("customer_name")
+        age := ctx.PostForm("age")
+        gender := ctx.PostForm("gender")
+        dbUpdate(customer_id, customer_name, age, gender)
+        ctx.Redirect(302, "/")
+	})
+	
+	//削除確認
+    router.GET("/delete_check/:id", func(ctx *gin.Context) {
+        n := ctx.Param("id")
+        id, err := strconv.Atoi(n)
+        if err != nil {
+            panic("ERROR")
+        }
+        todo := dbGetOne(id)
+        ctx.HTML(200, "delete.html", gin.H{"todo": todo})
+    })
+
+    //Delete
+    router.POST("/delete/:id", func(ctx *gin.Context) {
+        n := ctx.Param("id")
+        id, err := strconv.Atoi(n)
+        if err != nil {
+            panic("ERROR")
+        }
+        dbDelete(id)
+        ctx.Redirect(302, "/")
+
+    })
 
 	router.Run()
 }
