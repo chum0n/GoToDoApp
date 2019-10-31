@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Sample App</title>
+</head>
+<body>
+    <h1>削除確認</h1>
+    <p>本当に削除しますか？</p>
+    <ul>
+        <li>名前： {{.customer.Customer_name}}</li>
+        <li>年齢： {{.customer.Age}}</li>
+        <li>性別： {{.custoemr.Gender}}</li>
+    </ul>
+    
+    <form method="post" action="/delete/{{.customer.Customer_id}}">
+        <p><input type="submit" value="削除"></p>
+        <p><a href="/">戻る</a></p>
+    </form>
+    </body>
+</html>
