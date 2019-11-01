@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"todo/repository"
 	"todo/repository/customer"
 
@@ -53,6 +54,7 @@ func main() {
 		// 	panic(err)
 		// }
 		customer_id := ctx.Param("customer_id")
+		log.Println(customer_id)
 		customer := customer.SelectByCustomerID(customer_id)
 		ctx.HTML(200, "detail.html", gin.H{"customer": customer})
 	})

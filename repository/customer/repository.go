@@ -50,8 +50,8 @@ func SelectAllCustomers() []Customer {
 // SelectByCustomerID customerIDを条件にレコードを取得する
 func SelectByCustomerID(customer_id string) Customer {
 	var customer Customer
-	// 第２引数にはidを加えることで特定のレコードを取得することができます。
-	repository.DB.First(&customer, customer_id)
+	// 取得されるのは絶対一件なのでFirstを使った
+	repository.DB.Where("customer_id = ?", customer_id).First(&customer)
 	return customer
 }
 
@@ -61,7 +61,7 @@ func UpdateByCustomerID(customer_id string, customer_name string, ageS string, g
 	gender, _ := strconv.Atoi(genderS)
 	var customer Customer
 	// 特定のレコードを呼び出す
-	repository.DB.First(&customer, customer_id)
+	repository.DB.Where("customer_id = ?", customer_id).First(&customer)
 	customer.Customer_name = customer_name
 	customer.Age = age
 	customer.Gender = gender
@@ -71,6 +71,6 @@ func UpdateByCustomerID(customer_id string, customer_name string, ageS string, g
 //DB削除
 func DeleteByCustomerID(customer_id string) {
 	var customer Customer
-	repository.DB.First(&customer, customer_id)
+	repository.DB.Where("customer_id = ?", customer_id).First(&customer)
 	repository.DB.Delete(&customer)
 }

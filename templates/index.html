@@ -7,21 +7,13 @@
 <body>
     <h1>カスタマー情報</h1>
     <h2>追加</h2>
+    <!-- /newにPOSTで投げる -->
     <!-- Go側のcreateのとことつながっている -->
     <form method="post" action="/new">
         <p>ID<input type="text" name="customer_id" size="30" placeholder="入力してください" ></p>
         <p>名前<input type="text" name="customer_name" size="30" placeholder="入力してください" ></p>
         <p>年齢<input type="text" name="age" size="30" placeholder="入力してください" ></p>
         <p>性別(男は1,女は2)<input type="text" name="gender" size="30" placeholder="入力してください" ></p>
-        <!-- <p>年齢<input type="number" name="age"  ></p>
-        <p>性別(男は1,女は2)<input type="number" name="gender"  ></p> -->
-        <!-- <p>状態
-            <select name="status">
-                <option value="未実行">未実行</option>
-                <option value="実行中">実行中</option>
-                <option value="終了">終了</option>
-            </select>
-        </p> -->
         <p><input type="submit" value="Send"></p>
     </form>
 

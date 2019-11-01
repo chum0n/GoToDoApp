@@ -13,3 +13,7 @@ https://qiita.com/noborus/items/11438d16f790b1d42ad8
 gormはstructの複数形をテーブル名にする  
 それを避けるにはテーブル名を指定しなければならない  
 http://gorm.io/ja_JP/docs/conventions.html
+
+integer 型の主キーでのみ動作します  
+db.First()は  
+http://gorm.io/ja_JP/docs/query.html
