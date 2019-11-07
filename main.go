@@ -4,6 +4,7 @@ import (
 	"log"
 	"todo/repository"
 	"todo/repository/customer"
+	"todo/repository/store"
 
 	"github.com/gin-gonic/gin"
 
@@ -13,6 +14,9 @@ import (
 
 func main() {
 	router := gin.Default()
+	// 静的ファイル
+	// router.Static("URL", "静的ファイル格納場所")
+	router.Static("/assets", "./assets")
 	// HTMLを読み込むディレクトリを指定
 	router.LoadHTMLGlob("templates/*.html")
 
@@ -29,9 +33,21 @@ func main() {
 	//Index
 	router.GET("/", func(ctx *gin.Context) {
 		customers := customer.SelectAllCustomers()
+		stores := store.SelectAllStores()
 		ctx.HTML(200, "index.html", gin.H{
 			"customers": customers,
+			"stores":    stores,
 		})
+	})
+
+	// signup
+	router.GET("/signup", func(ctx *gin.Context) {
+		ctx.HTML(200, "signup.html", gin.H{})
+	})
+
+	// signin
+	router.GET("/signin", func(ctx *gin.Context) {
+		ctx.HTML(200, "signin.html", gin.H{})
 	})
 
 	//Create

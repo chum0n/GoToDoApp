@@ -34,3 +34,19 @@ http://gorm.io/ja_JP/docs/query.html
 
 can't find importと言われた  
 go getに-uオプションをつける
+
+css読み込めない  
+mainで静的ファイルを読み込ませる処理をかく  
+router.Static("/assets", "./assets")
+
+<h1>Signup</h1>
+    <h2>追加</h2>
+    <!-- /newにPOSTで投げる -->
+    <!-- Go側のcreateのとことつながっている -->
+    <form method="post" action="/new">
+        <p>ID<input type="text" name="customer_id" size="30" placeholder="入力してください" ></p>
+        <p>名前<input type="text" name="customer_name" size="30" placeholder="入力してください" ></p>
+        <p>年齢<input type="text" name="age" size="30" placeholder="入力してください" ></p>
+        <p>性別(男は1,女は2)<input type="text" name="gender" size="30" placeholder="入力してください" ></p>
+        <p><input type="submit" value="Send"></p>
+    </form>

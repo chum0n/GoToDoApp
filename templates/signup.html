@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>signup</title>
+    <link rel="stylesheet" href="assets/sign.css" type="text/css">
+</head>
+<body>
+    <div class="form-wrapper">
+    <h1>Sign Up</h1>
+    <form method="post" action="/new">
+        <div class="form-item">
+        <label for="id"></label>
+        <input type="text" name="customer_id" required="required" placeholder="ID"></input>
+        </div>
+        <div class="form-item">
+        <label for="name"></label>
+        <input type="text" name="customer_name" required="required" placeholder="name"></input>
+        </div>
+        <div class="form-item">
+        <label for="age"></label>
+        <input type="text" name="age" required="required" placeholder="age"></input>
+        </div>
+        <div class="form-item">
+        <label for="gender"></label>
+        <input type="text" name="gender" required="required" placeholder="gender"></input>
+        </div>
+        <div class="button-panel">
+        <input type="submit" class="button" title="Sign Up" value="Sign Up"></input>
+        </div>
+    </form>
+    <div class="form-footer">
+        <p><a href="#">Create an account</a></p>
+        <p><a href="#">Forgot password?</a></p>
+    </div>
+    </div>
+
+</body>
+</html>

@@ -39,7 +39,7 @@ func Insert(customer_id string, customer_name string, ageS string, genderS strin
 	repository.DB.Create(&Customer{Customer_id: customer_id, Customer_name: customer_name, Age: age, Gender: gender})
 }
 
-// SelectAllCustomers customerテーブルの全レコードを取得する
+// SelectAllCustomers customersテーブルの全レコードを取得する
 func SelectAllCustomers() []Customer {
 	var customers []Customer
 	// db.Find(&customers)で構造体Customerに対するテーブルの要素全てを取得し、それをOrder("created_at desc)で新しいものが上に来るよう並び替えを行なっています。

@@ -25,5 +25,14 @@
             </li>
         {{end}}
     </ul>
+
+    <ul>
+        {{ range .stores }}
+            <li>ID：{{ .Store_id }}、名前：{{ .Store_name }}、場所：{{ .Adress }}、価格帯：{{ .Price }}
+                <label><a href="#">編集</a></label>
+                <label><a href="#">削除</a></label>
+            </li>
+        {{end}}
+    </ul>
 </body>
 </html>
