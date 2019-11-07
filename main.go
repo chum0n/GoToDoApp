@@ -7,8 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	// 使わないことを明示しているが、いる
-	// _ "github.com/lib/pq"
+	// 使わないことを明示しているが必要
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 

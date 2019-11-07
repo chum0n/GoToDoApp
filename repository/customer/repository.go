@@ -7,7 +7,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// Customer　customerテーブルデータ
+// Customer　customersテーブルデータ
 type Customer struct {
 	// gorm.ModelはID, CreatedAt, UpdatedAt, DeletedAtというフィールドを持つ、GoのStructです。
 	// あなたのモデルに組み込んで使っても良いですし、組み込まずに独自のモデルを使っても構いません。
