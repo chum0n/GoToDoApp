@@ -50,3 +50,25 @@ router.Static("/assets", "./assets")
         <p>性別(男は1,女は2)<input type="text" name="gender" size="30" placeholder="入力してください" ></p>
         <p><input type="submit" value="Send"></p>
     </form>
+
+
+<h1>カスタマー情報</h1>
+    <h2>追加</h2>
+    <!-- /newにPOSTで投げる -->
+    <!-- Go側のcreateのとことつながっている -->
+    <form method="post" action="/new">
+        <p>ID<input type="text" name="customer_id" size="30" placeholder="入力してください" ></p>
+        <p>名前<input type="text" name="customer_name" size="30" placeholder="入力してください" ></p>
+        <p>年齢<input type="text" name="age" size="30" placeholder="入力してください" ></p>
+        <p>性別(男は1,女は2)<input type="text" name="gender" size="30" placeholder="入力してください" ></p>
+        <p><input type="submit" value="追加"></p>
+    </form>
+
+    <ul>
+        {{ range .customers }}
+            <li>ID：{{ .Customer_id }}、名前：{{ .Customer_name }}、年齢：{{ .Age }}、性別：{{ .Gender }}
+                <label><a href="/detail/{{.Customer_id}}">編集</a></label>
+                <label><a href="/delete_check/{{.Customer_id}}">削除</a></label>
+            </li>
+        {{end}}
+    </ul>

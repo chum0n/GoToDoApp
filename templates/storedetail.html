@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Sample App</title>
+</head>
+<body>
+    <h2>店情報編集</h2>
+
+    <form method="post" action="/updatestore/{{.store.Store_id}}">
+        <p>店名<input type="text" name="store_name" size="30" value="{{.store.Store_name}}" ></p>
+        <p>場所<input type="text" name="address" size="30" value="{{.store.Address}}" ></p>
+        <p>価格<input type="text" name="price" size="30" value="{{.store.Price}}" ></p>
+        <p><input type="submit" value="Send"></p>
+    </form>
+    </body>
+</html>

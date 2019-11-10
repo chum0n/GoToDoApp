@@ -3,36 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Sample App</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/stylesheet.css" type="text/css">
 </head>
 <body>
-    <h1>カスタマー情報</h1>
-    <h2>追加</h2>
-    <!-- /newにPOSTで投げる -->
-    <!-- Go側のcreateのとことつながっている -->
-    <form method="post" action="/new">
-        <p>ID<input type="text" name="customer_id" size="30" placeholder="入力してください" ></p>
-        <p>名前<input type="text" name="customer_name" size="30" placeholder="入力してください" ></p>
-        <p>年齢<input type="text" name="age" size="30" placeholder="入力してください" ></p>
-        <p>性別(男は1,女は2)<input type="text" name="gender" size="30" placeholder="入力してください" ></p>
-        <p><input type="submit" value="Send"></p>
-    </form>
+    <header></header>
+    <div class="top-wrapper">
+      <div class="container">
+        <h1>FIND A NEW STORE.</h1>
+        <p>kyo-mealは京大周辺の飲食店を見つけるサービスです。</p>
+        <p>さっそく見つけてみましょう。</p>
+        <div class="btn-wrapper">
+          <a href="/signup" class="btn signup">新規登録はこちら</a>
+          <p>or sign up with</p>
+          <a href="#" class="btn facebook">
+            <span class="fa fa-facebook"></span>
+            Facebookで登録
+            </a>
+          <a href="#" class="btn twitter">
+            <span class="fa fa-twitter"></span>
+            Twitterで登録
+            </a>
+        </div>
+      </div>
+    </div>
+ 
 
-    <ul>
-        {{ range .customers }}
-            <li>ID：{{ .Customer_id }}、名前：{{ .Customer_name }}、年齢：{{ .Age }}、性別：{{ .Gender }}
-                <label><a href="/detail/{{.Customer_id}}">編集</a></label>
-                <label><a href="/delete_check/{{.Customer_id}}">削除</a></label>
-            </li>
-        {{end}}
-    </ul>
+    
+
+    <h1>店を探す</h1>
+    <h2>値段から探す</h2>
+        <form method="post" action="">
+            <p>値段<input type="text" name="price" required="required" placeholder="値段"></input></p>
+            <p><input type="submit" value="検索"></p>
+        </form>
+    <h2>場所から探す</h2>
+        <form method="post" action=""></form>
+            <p>場所<input type="text" name="address" required="required" placeholder="場所"></input></p>
+            <p><input type="submit" value="検索"></p>
+        </form>
+    <h1>店を追加する</h1>
+        <form method="post" action="/newstore">
+            <p>ID<input type="text" name="store_id" size="30" placeholder="入力してください" ></p>
+            <p>名前<input type="text" name="store_name" size="30" placeholder="入力してください" ></p>
+            <p>場所<input type="text" name="address" size="30" placeholder="入力してください" ></p>
+            <p>価格<input type="text" name="price" size="30" placeholder="入力してください" ></p>
+            <p><input type="submit" value="追加"></p>
+        </form>
 
     <ul>
         {{ range .stores }}
-            <li>ID：{{ .Store_id }}、名前：{{ .Store_name }}、場所：{{ .Adress }}、価格帯：{{ .Price }}
-                <label><a href="#">編集</a></label>
-                <label><a href="#">削除</a></label>
+            <li>ID：{{ .Store_id }}、名前：{{ .Store_name }}、場所：{{ .Address }}、価格帯：{{ .Price }}
+                <label><a href="/storedetail/{{.Store_id}}">編集</a></label>
+                <label><a href="/deletestore_check/{{.Store_id}}">削除</a></label>
             </li>
         {{end}}
     </ul>
+
 </body>
 </html>

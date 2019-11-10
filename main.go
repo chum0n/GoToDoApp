@@ -50,13 +50,26 @@ func main() {
 		ctx.HTML(200, "signin.html", gin.H{})
 	})
 
-	//Create
+	//Create new customer
 	router.POST("/new", func(ctx *gin.Context) {
 		customer_id := ctx.PostForm("customer_id")
 		customer_name := ctx.PostForm("customer_name")
 		age := ctx.PostForm("age")
 		gender := ctx.PostForm("gender")
 		customer.Insert(customer_id, customer_name, age, gender)
+		// localhost:8080/にステータスコード302としてリダイレクト
+		ctx.Redirect(302, "/")
+	})
+
+	// Create new store
+	router.POST("/newstore", func(ctx *gin.Context) {
+		store_id := ctx.PostForm("store_id")
+		store_name := ctx.PostForm("store_name")
+		address := ctx.PostForm("address")
+		price := ctx.PostForm("price")
+		log.Println(store_id)
+		log.Println(store_name)
+		store.Insert(store_id, store_name, address, price)
 		// localhost:8080/にステータスコード302としてリダイレクト
 		ctx.Redirect(302, "/")
 	})
@@ -72,6 +85,19 @@ func main() {
 		log.Println(customer_id)
 		customer := customer.SelectByCustomerID(customer_id)
 		ctx.HTML(200, "detail.html", gin.H{"customer": customer})
+	})
+
+	//Detail new store
+	router.GET("/storedetail/:store_id", func(ctx *gin.Context) {
+		// n := ctx.Param("customer_id")
+		// id, err := strconv.Atoi(n)
+		// if err != nil {
+		// 	panic(err)
+		// }
+		store_id := ctx.Param("store_id")
+		log.Println(store_id)
+		store := store.SelectByStoreID(store_id)
+		ctx.HTML(200, "storedetail.html", gin.H{"store": store})
 	})
 
 	//Update
@@ -90,6 +116,22 @@ func main() {
 		ctx.Redirect(302, "/")
 	})
 
+	//Update store
+	router.POST("/updatestore/:store_id", func(ctx *gin.Context) {
+		// ここでidの値を受け取り、int型に変換
+		// n := ctx.Param("id")
+		// id, err := strconv.Atoi(n)
+		// if err != nil {
+		// 	panic("ERROR")
+		// }
+		store_id := ctx.Param("store_id")
+		store_name := ctx.PostForm("store_name")
+		address := ctx.PostForm("address")
+		price := ctx.PostForm("price")
+		store.UpdateByStoreID(store_id, store_name, address, price)
+		ctx.Redirect(302, "/")
+	})
+
 	//削除確認
 	router.GET("/delete_check/:customer_id", func(ctx *gin.Context) {
 		// n := ctx.Param("id")
@@ -102,6 +144,18 @@ func main() {
 		ctx.HTML(200, "delete.html", gin.H{"customer": customer})
 	})
 
+	// 店舗削除確認
+	router.GET("/deletestore_check/:store_id", func(ctx *gin.Context) {
+		// n := ctx.Param("id")
+		// id, err := strconv.Atoi(n)
+		// if err != nil {
+		// 	panic("ERROR")
+		// }
+		store_id := ctx.Param("store_id")
+		store := store.SelectByStoreID(store_id)
+		ctx.HTML(200, "deletestore.html", gin.H{"store": store})
+	})
+
 	//Delete
 	router.POST("/delete/:customer_id", func(ctx *gin.Context) {
 		// n := ctx.Param("id")
@@ -111,6 +165,18 @@ func main() {
 		// }
 		customer_id := ctx.Param("customer_id")
 		customer.DeleteByCustomerID(customer_id)
+		ctx.Redirect(302, "/")
+	})
+
+	//Delete
+	router.POST("/deletestore/:store_id", func(ctx *gin.Context) {
+		// n := ctx.Param("id")
+		// id, err := strconv.Atoi(n)
+		// if err != nil {
+		// 	panic("ERROR")
+		// }
+		store_id := ctx.Param("store_id")
+		store.DeleteByStoreID(store_id)
 		ctx.Redirect(302, "/")
 	})
 
