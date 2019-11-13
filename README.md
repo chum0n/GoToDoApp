@@ -39,6 +39,12 @@ css読み込めない
 mainで静的ファイルを読み込ませる処理をかく  
 router.Static("/assets", "./assets")
 
+logどこ出るねん  
+GINの処理の上の行！
+
+検索とか押しても反応ない  
+formの閉じかっこ間違えてない？
+
 <h1>Signup</h1>
     <h2>追加</h2>
     <!-- /newにPOSTで投げる -->

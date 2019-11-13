@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Sample App</title>
+</head>
+<body>
+    <h2>検索結果</h2>
+
+    <table border="1">
+    <tr>
+        <th>ID</th>
+        <th>名前</th>
+        <th>場所</th>
+        <th>価格帯</th>
+        <th></th>
+        <th></th>
+    </tr>
+    {{ range .stores }}
+    <tr>
+        <td>{{ .Store_id }}</td>
+        <td>{{ .Store_name }}</td>
+        <td>{{ .Address }}</td>
+        <td>{{ .Price }}</td>
+        <td><a href="/storedetail/{{.Store_id}}">編集</a></td>
+        <td><a href="/deletestore_check/{{.Store_id}}">削除</td>
+    </tr>
+    {{end}}
+    </table>
+</body>
+</html>

@@ -180,5 +180,29 @@ func main() {
 		ctx.Redirect(302, "/")
 	})
 
+	// search by price
+	router.POST("/pricesearch", func(ctx *gin.Context) {
+		// n := ctx.Param("id")
+		// id, err := strconv.Atoi(n)
+		// if err != nil {
+		// 	panic("ERROR")
+		// }
+		price := ctx.PostForm("price")
+		stores := store.SearchByPrice(price)
+		ctx.HTML(200, "pricesearch.html", gin.H{"stores": stores})
+	})
+
+	// search by address
+	router.POST("/addresssearch", func(ctx *gin.Context) {
+		// n := ctx.Param("id")
+		// id, err := strconv.Atoi(n)
+		// if err != nil {
+		// 	panic("ERROR")
+		// }
+		address := ctx.PostForm("address")
+		stores := store.SearchByAddress(address)
+		ctx.HTML(200, "addresssearch.html", gin.H{"stores": stores})
+	})
+
 	router.Run()
 }

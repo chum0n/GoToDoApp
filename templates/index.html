@@ -7,7 +7,17 @@
     <link rel="stylesheet" href="assets/stylesheet.css" type="text/css">
 </head>
 <body>
-    <header></header>
+    <div class="head">
+      <div class="container">
+        <div class="header-left">
+                <img class="logo" src="https://prog-8.com/images/html/advanced/main_logo.png">
+          <!-- <img src="../assets/rice.png" class="logo"　width="10%" height="10%" /> -->
+        </div>
+        <div class="header-right">
+            <a href="/signin" class="login">ログイン</a>
+        </div>
+      </div>
+    </div>
     <div class="top-wrapper">
       <div class="container">
         <h1>FIND A NEW STORE.</h1>
@@ -27,18 +37,15 @@
         </div>
       </div>
     </div>
- 
-
-    
 
     <h1>店を探す</h1>
     <h2>値段から探す</h2>
-        <form method="post" action="">
+        <form method="post" action="/pricesearch">
             <p>値段<input type="text" name="price" required="required" placeholder="値段"></input></p>
             <p><input type="submit" value="検索"></p>
         </form>
     <h2>場所から探す</h2>
-        <form method="post" action=""></form>
+        <form method="post" action="/addresssearch">
             <p>場所<input type="text" name="address" required="required" placeholder="場所"></input></p>
             <p><input type="submit" value="検索"></p>
         </form>
@@ -51,14 +58,26 @@
             <p><input type="submit" value="追加"></p>
         </form>
 
-    <ul>
-        {{ range .stores }}
-            <li>ID：{{ .Store_id }}、名前：{{ .Store_name }}、場所：{{ .Address }}、価格帯：{{ .Price }}
-                <label><a href="/storedetail/{{.Store_id}}">編集</a></label>
-                <label><a href="/deletestore_check/{{.Store_id}}">削除</a></label>
-            </li>
-        {{end}}
-    </ul>
+    <table border="1">
+    <tr>
+        <th>ID</th>
+        <th>名前</th>
+        <th>場所</th>
+        <th>価格帯</th>
+        <th></th>
+        <th></th>
+    </tr>
+    {{ range .stores }}
+    <tr>
+        <td>{{ .Store_id }}</td>
+        <td>{{ .Store_name }}</td>
+        <td>{{ .Address }}</td>
+        <td>{{ .Price }}</td>
+        <td><a href="/storedetail/{{.Store_id}}">編集</a></td>
+        <td><a href="/deletestore_check/{{.Store_id}}">削除</td>
+    </tr>
+    {{end}}
+    </table>
 
 </body>
 </html>

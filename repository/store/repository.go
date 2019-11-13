@@ -61,3 +61,18 @@ func DeleteByStoreID(store_id string) {
 	repository.DB.Where("store_id = ?", store_id).First(&store)
 	repository.DB.Delete(&store)
 }
+
+// SearchByPrice
+func SearchByPrice(priceS string) []Store {
+	var stores []Store
+	price, _ := strconv.Atoi(priceS)
+	repository.DB.Where("price <= ?", price).Find(&stores)
+	return stores
+}
+
+// SearchByAddress
+func SearchByAddress(address string) []Store {
+	var stores []Store
+	repository.DB.Where("address = ?", address).Find(&stores)
+	return stores
+}
