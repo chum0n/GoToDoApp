@@ -4,6 +4,7 @@ import (
 	"log"
 	"todo/repository"
 	"todo/repository/customer"
+	"todo/repository/evaluation"
 	"todo/repository/store"
 
 	"github.com/gin-gonic/gin"
@@ -32,11 +33,11 @@ func main() {
 
 	//Index
 	router.GET("/", func(ctx *gin.Context) {
-		customers := customer.SelectAllCustomers()
 		stores := store.SelectAllStores()
+		count := store.CountAllStore()
 		ctx.HTML(200, "index.html", gin.H{
-			"customers": customers,
-			"stores":    stores,
+			"stores": stores,
+			"count":  count,
 		})
 	})
 
@@ -48,6 +49,44 @@ func main() {
 	// signin
 	router.GET("/signin", func(ctx *gin.Context) {
 		ctx.HTML(200, "signin.html", gin.H{})
+	})
+
+	// searchstore
+	router.GET("/searchstore", func(ctx *gin.Context) {
+		stores := store.SelectAllStores()
+		ctx.HTML(200, "searchstore.html", gin.H{
+			"stores": stores,
+		})
+	})
+
+	router.POST("/consearch", func(ctx *gin.Context) {
+		lower := ctx.PostForm("lower")
+		upper := ctx.PostForm("upper")
+		address := ctx.PostForm("address")
+		stores := store.SearchByPriceAndAddress(lower, upper, address)
+		ctx.HTML(200, "searchstore.html", gin.H{
+			"stores": stores,
+		})
+	})
+
+	// editstore
+	router.GET("/editstore", func(ctx *gin.Context) {
+		stores := store.SelectAllStores()
+		// evals := make([]evaluation.Evaluation, 0, len(stores))
+		// for i := 0; i < len(stores); i++ {
+		// 	evals[i] = evaluation.SelectEvaluation(stores[i].Store_id)
+		// }
+		ctx.HTML(200, "editstore.html", gin.H{
+			"stores": stores,
+		})
+	})
+
+	// ranking
+	router.GET("/ranking", func(ctx *gin.Context) {
+		stores := store.SelectAllStores()
+		ctx.HTML(200, "ranking.html", gin.H{
+			"stores": stores,
+		})
 	})
 
 	//Create new customer
@@ -67,11 +106,33 @@ func main() {
 		store_name := ctx.PostForm("store_name")
 		address := ctx.PostForm("address")
 		price := ctx.PostForm("price")
-		log.Println(store_id)
-		log.Println(store_name)
-		store.Insert(store_id, store_name, address, price)
+		evaluationS := ctx.PostForm("evaluation")
+		// transaction
+		tx := repository.DB.Begin()
+		defer func() {
+			if r := recover(); r != nil {
+				tx.Rollback()
+			}
+		}()
+
+		if err := tx.Error; err != nil {
+			return
+		}
+
+		if err := store.Insert(tx, store_id, store_name, address, price); err != nil {
+			tx.Rollback()
+			return
+		}
+
+		if err := evaluation.Insert(tx, store_id, evaluationS); err != nil {
+			tx.Rollback()
+			return
+		}
+
+		tx.Commit()
+
 		// localhost:8080/にステータスコード302としてリダイレクト
-		ctx.Redirect(302, "/")
+		ctx.Redirect(302, "/editstore")
 	})
 
 	//Detail
@@ -129,7 +190,7 @@ func main() {
 		address := ctx.PostForm("address")
 		price := ctx.PostForm("price")
 		store.UpdateByStoreID(store_id, store_name, address, price)
-		ctx.Redirect(302, "/")
+		ctx.Redirect(302, "/editstore")
 	})
 
 	//削除確認
@@ -165,7 +226,7 @@ func main() {
 		// }
 		customer_id := ctx.Param("customer_id")
 		customer.DeleteByCustomerID(customer_id)
-		ctx.Redirect(302, "/")
+		ctx.Redirect(302, "/editstore")
 	})
 
 	//Delete
@@ -187,8 +248,9 @@ func main() {
 		// if err != nil {
 		// 	panic("ERROR")
 		// }
-		price := ctx.PostForm("price")
-		stores := store.SearchByPrice(price)
+		lower := ctx.PostForm("lower")
+		upper := ctx.PostForm("upper")
+		stores := store.SearchByPrice(lower, upper)
 		ctx.HTML(200, "pricesearch.html", gin.H{"stores": stores})
 	})
 

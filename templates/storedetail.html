@@ -3,15 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <title>Sample App</title>
-</head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/editheader.css" type="text/css">
+    <link rel="stylesheet" href="../assets/form.css" type="text/css">
 <body>
+    <div class="header">
+        <div class="sides">
+            <a href="/" class="logo">TOP</a>
+        </div>
+        <div class="sides"> <a href="#" class="menu">-</a></div>
+        <div class="info">
+        <h4><a href="#category">EDIT</a></h4>
+            <h1>EDIT A STORE DATA</h1>
+            <div class="meta">
+            This is egg.
+            </div>
+        </div>
+    </div>
+    <div class="content">
     <h2>店情報編集</h2>
 
     <form method="post" action="/updatestore/{{.store.Store_id}}">
         <p>店名<input type="text" name="store_name" size="30" value="{{.store.Store_name}}" ></p>
-        <p>場所<input type="text" name="address" size="30" value="{{.store.Address}}" ></p>
-        <p>価格<input type="text" name="price" size="30" value="{{.store.Price}}" ></p>
+        <div class="radio-wrap">
+                <span class="item-name">場所</span>
+                <label>
+                <input type="radio" name="address" value="百万遍">
+                <span>百万遍</span>
+                </label>
+
+                <label>
+                <input type="radio" name="address" value="北白川">
+                <span>北白川</span>
+                </label>
+
+                <label>
+                <input type="radio" name="address" value="一乗寺">
+                <span>一乗寺</span>
+                </label>
+
+                <label>
+                <input type="radio" name="address" value="その他">
+                <span>その他</span>
+                </label>
+            </div>
+            <div class="select-wrap">
+                <span class="item-name">価格帯</span>
+                <select name="price">
+                <option value="1000">1000</option>
+                <option value="2000">2000</option>
+                <option value="3000">3000</option>
+                <option value="4000">4000</option>
+                <option value="5000">5000~</option>
+                </select>
+            </div>
         <p><input type="submit" value="Send"></p>
     </form>
-    </body>
+</div>
+    <div class="footer">
+      <div class="footer-logo">
+        
+      </div>
+
+      <div class="footer-list">
+        <ul>
+          <li><a href="/">トップ</a></li>
+          <li><a href="/searchstore">店舗検索</a></li>
+          <li><a href="/editstore">店舗情報編集</a></li>
+          <li><a href="/ranking">ランキング</a></li>
+        </ul>
+      </div>
+
+</div>
+</body>
 </html>

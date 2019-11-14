@@ -22,9 +22,10 @@ func init() {
 }
 
 // Insert レコードを登録
-func Insert(store_id string, store_name string, address string, priceS string) {
+func Insert(tx *gorm.DB, store_id string, store_name string, address string, priceS string) error {
 	price, _ := strconv.Atoi(priceS)
-	repository.DB.Create(&Store{Store_id: store_id, Store_name: store_name, Address: address, Price: price})
+	err := tx.Create(&Store{Store_id: store_id, Store_name: store_name, Address: address, Price: price}).Error
+	return err
 }
 
 // SelectAllStores storesテーブルの全レコードを取得する
@@ -43,7 +44,7 @@ func SelectByStoreID(store_id string) Store {
 	return store
 }
 
-// UpdateByStoreID
+// UpdateByStoreID storeIDを条件にレコードを更新する
 func UpdateByStoreID(store_id string, store_name string, address string, priceS string) {
 	price, _ := strconv.Atoi(priceS)
 	var store Store
@@ -63,10 +64,11 @@ func DeleteByStoreID(store_id string) {
 }
 
 // SearchByPrice
-func SearchByPrice(priceS string) []Store {
+func SearchByPrice(lowerS string, upperS string) []Store {
 	var stores []Store
-	price, _ := strconv.Atoi(priceS)
-	repository.DB.Where("price <= ?", price).Find(&stores)
+	lower, _ := strconv.Atoi(lowerS)
+	upper, _ := strconv.Atoi(upperS)
+	repository.DB.Where("price >= ? AND price <= ?", lower, upper).Find(&stores)
 	return stores
 }
 
@@ -75,4 +77,26 @@ func SearchByAddress(address string) []Store {
 	var stores []Store
 	repository.DB.Where("address = ?", address).Find(&stores)
 	return stores
+}
+
+// SearchByPriceAndAddress
+func SearchByPriceAndAddress(lowerS string, upperS string, address string) []Store {
+	var stores []Store
+	lower, _ := strconv.Atoi(lowerS)
+	upper, _ := strconv.Atoi(upperS)
+	if address == "" {
+		repository.DB.Where("price >= ? AND price <= ?", lower, upper).Find(&stores)
+	} else {
+		repository.DB.Where("price >= ? AND price <= ? AND address = ?", lower, upper, address).Find(&stores)
+	}
+	return stores
+}
+
+// CountAllStore
+func CountAllStore() int {
+	// var stores []Store
+	var count int
+	// repository.DB.Where("deleted_at != ?", "NULL").Find(&stores).Count(&count)
+	repository.DB.Table("stores").Count(&count)
+	return count
 }

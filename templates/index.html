@@ -4,80 +4,28 @@
     <meta charset="UTF-8">
     <title>Sample App</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/stylesheet.css" type="text/css">
+    <link rel="stylesheet" href="assets/top.css" type="text/css">
 </head>
 <body>
-    <div class="head">
-      <div class="container">
-        <div class="header-left">
-                <img class="logo" src="https://prog-8.com/images/html/advanced/main_logo.png">
-          <!-- <img src="../assets/rice.png" class="logo"　width="10%" height="10%" /> -->
-        </div>
-        <div class="header-right">
-            <a href="/signin" class="login">ログイン</a>
-        </div>
-      </div>
-    </div>
     <div class="top-wrapper">
-      <div class="container">
+      <div class="container text_against_picture">
         <h1>FIND A NEW STORE.</h1>
-        <p>kyo-mealは京大周辺の飲食店を見つけるサービスです。</p>
-        <p>さっそく見つけてみましょう。</p>
+        <p>このサービスでは京大周辺の飲食店を管理することができます。</p>
+        <p>さっそく新しい店を見つけてみましょう。</p>
         <div class="btn-wrapper">
-          <a href="/signup" class="btn signup">新規登録はこちら</a>
-          <p>or sign up with</p>
-          <a href="#" class="btn facebook">
-            <span class="fa fa-facebook"></span>
-            Facebookで登録
-            </a>
-          <a href="#" class="btn twitter">
-            <span class="fa fa-twitter"></span>
-            Twitterで登録
-            </a>
+          <a href="/searchstore" class="btn signup">店を検索する</a>
+          <a href="/editstore" class="btn signup">店舗情報の追加・編集</a>
+          <a href="/ranking" class="btn signup">ランキング</a>
         </div>
+        <p>アカウントの新規登録・ログインはこちらからできます。</p>
+        <div class="btn-wrapper">
+          <a href="/signup" class="btn signup">新規登録</a>
+          <a href="/signin" class="btn signup">ログイン</a>
+        </div>
+        <p>今までに登録された店舗数</p>
+        <p>{{ .count }}店舗</p>
       </div>
     </div>
-
-    <h1>店を探す</h1>
-    <h2>値段から探す</h2>
-        <form method="post" action="/pricesearch">
-            <p>値段<input type="text" name="price" required="required" placeholder="値段"></input></p>
-            <p><input type="submit" value="検索"></p>
-        </form>
-    <h2>場所から探す</h2>
-        <form method="post" action="/addresssearch">
-            <p>場所<input type="text" name="address" required="required" placeholder="場所"></input></p>
-            <p><input type="submit" value="検索"></p>
-        </form>
-    <h1>店を追加する</h1>
-        <form method="post" action="/newstore">
-            <p>ID<input type="text" name="store_id" size="30" placeholder="入力してください" ></p>
-            <p>名前<input type="text" name="store_name" size="30" placeholder="入力してください" ></p>
-            <p>場所<input type="text" name="address" size="30" placeholder="入力してください" ></p>
-            <p>価格<input type="text" name="price" size="30" placeholder="入力してください" ></p>
-            <p><input type="submit" value="追加"></p>
-        </form>
-
-    <table border="1">
-    <tr>
-        <th>ID</th>
-        <th>名前</th>
-        <th>場所</th>
-        <th>価格帯</th>
-        <th></th>
-        <th></th>
-    </tr>
-    {{ range .stores }}
-    <tr>
-        <td>{{ .Store_id }}</td>
-        <td>{{ .Store_name }}</td>
-        <td>{{ .Address }}</td>
-        <td>{{ .Price }}</td>
-        <td><a href="/storedetail/{{.Store_id}}">編集</a></td>
-        <td><a href="/deletestore_check/{{.Store_id}}">削除</td>
-    </tr>
-    {{end}}
-    </table>
 
 </body>
 </html>
