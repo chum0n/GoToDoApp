@@ -1,0 +1,65 @@
+@charset "utf-8";
+body {
+    background-image: url(../assets/ex1.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #464646;
+    z-index: 0;
+  }
+
+body::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  left: -5px;
+  right: -5px;
+  background: inherit;
+  filter: blur(2px);
+  z-index: -1;
+}
+
+.text_against_picture{
+  text-shadow: 0 0 10px #333;
+  color: #ffffff;
+  padding-left: 100px;
+}
+
+.text_against_picture h1 {
+    font-size: 50px;
+}
+
+.text_against_picture p {
+    font-size: 25px;
+}
+
+.btn {
+  padding: 8px 24px;
+  color: white;
+  display: inline-block;
+  opacity: 0.9;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+
+.signup {
+  background-color: #239b76;
+  font-size: 45px;
+}
+
+.btn-wrapper {
+  margin: 20px 0px;
+}
+
+.btn-wrapper p {
+  margin: 10px 0px;
+}
+
+.btn-wrapper a {
+    font-size: 25px;
+  }
