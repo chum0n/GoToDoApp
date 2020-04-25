@@ -84,8 +84,10 @@ func main() {
 	// ranking
 	router.GET("/ranking", func(ctx *gin.Context) {
 		stores := store.SelectAllStores()
+		forRankings := evaluation.Ranking()
 		ctx.HTML(200, "ranking.html", gin.H{
-			"stores": stores,
+			"stores":      stores,
+			"forRankings": forRankings,
 		})
 	})
 
@@ -238,7 +240,7 @@ func main() {
 		// }
 		store_id := ctx.Param("store_id")
 		store.DeleteByStoreID(store_id)
-		ctx.Redirect(302, "/")
+		ctx.Redirect(302, "/editstore")
 	})
 
 	// search by price

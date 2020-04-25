@@ -1,49 +1,47 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Sample App</title>
-    <link rel="stylesheet" href="assets/table.css" type="text/css">
-    <link rel="stylesheet" href="assets/searchheader.css" type="text/css">
-</head>
-<body>
+    <link rel="stylesheet" href="assets/table.css" type="text/css" />
+    <link rel="stylesheet" href="assets/searchheader.css" type="text/css" />
+  </head>
+  <body>
     <div class="header">
-        <div class="sides">
-            <a href="/" class="logo">TOP</a>
-        </div>
-        <div class="sides"> <a href="#" class="menu">-</a></div>
-        <div class="info">
+      <div class="sides">
+        <a href="/" class="logo">TOP</a>
+      </div>
+      <div class="sides"><a href="#" class="menu">-</a></div>
+      <div class="info">
         <h4><a href="#category">SEARCH</a></h4>
-            <h1>SEARCH A STORE DATA</h1>
-            <div class="meta">
-            This is meat.
-            </div>
+        <h1>SEARCH A STORE DATA</h1>
+        <div class="meta">
+          This is meat.
         </div>
+      </div>
     </div>
     <div class="content">
-    <h2>検索結果</h2>
+      <h2>検索結果</h2>
 
-    <table border="1">
-    <tr>
-        <th>ID</th>
-        <th>名前</th>
-        <th>場所</th>
-        <th>価格帯</th>
-    </tr>
-    {{ range .stores }}
-    <tr>
-        <td>{{ .Store_id }}</td>
-        <td>{{ .Store_name }}</td>
-        <td>{{ .Address }}</td>
-        <td>{{ .Price }}</td>
-    </tr>
-    {{end}}
-    </table>
-</div>
+      <table border="1">
+        <tr>
+          <th>ID</th>
+          <th>名前</th>
+          <th>場所</th>
+          <th>価格帯</th>
+        </tr>
+        {{ range .stores }}
+        <tr>
+          <td>{{ .Store_id }}</td>
+          <td>{{ .Store_name }}</td>
+          <td>{{ .Address }}</td>
+          <td>{{ .Price }}</td>
+        </tr>
+        {{end}}
+      </table>
+    </div>
     <div class="footer">
-      <div class="footer-logo">
-        
-      </div>
+      <div class="footer-logo"></div>
 
       <div class="footer-list">
         <ul>
@@ -53,7 +51,6 @@
           <li><a href="/ranking">ランキング</a></li>
         </ul>
       </div>
-
     </div>
-</body>
+  </body>
 </html>
