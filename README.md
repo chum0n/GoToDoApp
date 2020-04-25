@@ -1,15 +1,19 @@
-# 計算機科学実験4
+# 使用した技術要素
 
-## メモ
+Golang, PostgreSQL, GORM
 
-### データベース
-postgres  
-ER図の作成にはLucidchart(http://www.lucidchart.com)を使用しようとしたが、よくわからなかったのでMySQLWorkbenchを使用  
-以下の記事が書き方の参考になる  
-https://qiita.com/noborus/items/11438d16f790b1d42ad8  
-書き方はIE記法を学習（ググったらいっぱい出てくる）
+# 全体の設計・構成についての説明
 
-## 困ったこと
-gormはstructの複数形をテーブル名にする  
-それを避けるにはテーブル名を指定しなければならない  
-http://gorm.io/ja_JP/docs/conventions.html
+
+# 開発のセットアップ手順
+
+## 困った時には
+GORM関連  
+公式  
+http://gorm.io/ja_JP/docs/  
+Qiita  
+https://qiita.com/chan-p/items/cf3e007b82cc7fce2d81  
+
+GIN関連
+公式  
+https://gin-gonic.com/ja/docs/

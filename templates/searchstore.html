@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Sample App</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/searchheader.css" type="text/css">
+    <link rel="stylesheet" href="assets/form.css" type="text/css">
+    <link rel="stylesheet" href="assets/table.css" type="text/css">
+</head>
+
+<body>
+    <div class="header">
+    <div class="sides">
+        <a href="/" class="logo">TOP</a>
+    </div>
+    <div class="sides"> <a href="#" class="menu">-</a></div>
+    <div class="info">
+    <h4><a href="#category">SEARCH</a></h4>
+        <h1>SEARCH A STORE DATA</h1>
+        <div class="meta">
+        This is meat.
+        </div>
+    </div>
+    </div>
+    <div class="content">
+    <h1>店を検索する</h1>
+    
+    <h2>場所・値段から絞り込む</h2>
+        <form action="/consearch" method="post">
+            <div class="radio-wrap">
+                <label>
+                <input type="radio" name="address" value="百万遍">
+                <span>百万遍</span>
+                </label>
+
+                <label>
+                <input type="radio" name="address" value="北白川">
+                <span>北白川</span>
+                </label>
+
+                <label>
+                <input type="radio" name="address" value="一乗寺">
+                <span>一乗寺</span>
+                </label>
+
+                <label>
+                <input type="radio" name="address" value="その他">
+                <span>その他</span>
+                </label>
+            </div>
+            <div class="select-wrap">
+                <span class="item-name">下限</span>
+                <select name="lower">
+                <option value="0">0</option>
+                <option value="1000">1000</option>
+                <option value="2000">2000</option>
+                <option value="3000">3000</option>
+                <option value="4000">4000</option>
+                </select>
+                <span class="item-name">上限</span>
+                <select name="upper">
+                <option value="1000">1000</option>
+                <option value="2000">2000</option>
+                <option value="3000">3000</option>
+                <option value="4000">4000</option>
+                <option value="5000">5000</option>
+                </select>
+            </div>
+            <p><input type="submit" value="検索"></p>
+        </form>
+    <h2>場所から探す</h2>
+    <form method="post" action="/addresssearch">
+        <div class="radio-wrap">
+            <label>
+            <input type="radio" name="address" value="百万遍">
+            <span>百万遍</span>
+            </label>
+
+            <label>
+            <input type="radio" name="address" value="北白川">
+            <span>北白川</span>
+            </label>
+
+            <label>
+                <input type="radio" name="address" value="一乗寺">
+                <span>一乗寺</span>
+                </label>
+
+                <label>
+                <input type="radio" name="address" value="その他">
+                <span>その他</span>
+                </label>
+        </div>
+        <p><input type="submit" value="検索"></p>
+    </form>
+    <h2>値段から探す</h2>
+        <form method="post" action="/pricesearch">
+            <div class="select-wrap">
+                <span class="item-name">下限</span>
+                <select name="lower">
+                <option value="0">0</option>
+                <option value="1000">1000</option>
+                <option value="2000">2000</option>
+                <option value="3000">3000</option>
+                <option value="4000">4000</option>
+                </select>
+                <span class="item-name">上限</span>
+                <select name="upper">
+                <option value="1000">1000</option>
+                <option value="2000">2000</option>
+                <option value="3000">3000</option>
+                <option value="4000">4000</option>
+                <option value="5000">5000</option>
+                </select>
+            </div>
+            <p><input type="submit" value="検索"></p>
+        </form>
+
+    <table border="1">
+    <tr>
+        <th>ID</th>
+        <th>名前</th>
+        <th>場所</th>
+        <th>価格帯</th>
+    </tr>
+    {{ range .stores }}
+    <tr>
+        <td>{{ .Store_id }}</td>
+        <td>{{ .Store_name }}</td>
+        <td>{{ .Address }}</td>
+        <td>{{ .Price }}</td>
+    </tr>
+    {{end}}
+    </table>
+</div>
+    <div class="footer">
+      <!-- <div>要素を追加し、「footer-logo」というclassをつけてください -->
+      <div class="footer-logo">
+        
+      </div>
+      
+      <!-- <div>要素を追加し、「footer-list」というclassをつけてください -->
+      <div class="footer-list">
+        <ul>
+          <li><a href="/">トップ</a></li>
+          <li><a href="/searchstore">店舗検索</a></li>
+          <li><a href="/editstore">店舗情報編集</a></li>
+          <li><a href="/ranking">ランキング</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+</body>
+</html>

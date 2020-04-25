@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sample App</title>
+    <link
+      rel="stylesheet"
+      href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="../assets/editheader.css" type="text/css" />
+    <link rel="stylesheet" href="../assets/form.css" type="text/css" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="sides">
+        <a href="/" class="logo">TOP</a>
+      </div>
+      <div class="sides"><a href="#" class="menu">-</a></div>
+      <div class="info">
+        <h4><a href="#category">EDIT</a></h4>
+        <h1>EDIT A STORE DATA</h1>
+        <div class="meta">
+          This is egg.
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <h1>削除確認</h1>
+      <p>本当に削除しますか？</p>
+      <ul>
+        <li>店名： {{.store.Store_name}}</li>
+        <li>場所： {{.store.Address}}</li>
+        <li>価格： {{.store.Price}}</li>
+      </ul>
+
+      <form method="post" action="/deletestore/{{.store.Store_id}}">
+        <p><input type="submit" value="削除" /></p>
+        <p><a href="/editstore">戻る</a></p>
+      </form>
+      <div class="footer">
+        <div class="footer-logo"></div>
+      </div>
+      <div class="footer-list">
+        <ul>
+          <li><a href="/">トップ</a></li>
+          <li><a href="/searchstore">店舗検索</a></li>
+          <li><a href="/editstore">店舗情報編集</a></li>
+          <li><a href="/ranking">ランキング</a></li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
